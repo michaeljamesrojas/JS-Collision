@@ -10,19 +10,19 @@ $(document).ready(function() {
    setTimeout(()=>{
     AddNode('D');
    },1500);
-
-
+   
+  
 });
 
 function AddNode(name){
     nodeCollection.push(name);
     console.log('collection: ', nodeCollection);
-    $("#space").append(
-        <div id="+name+" class="draggable">
+    $("#space").append(`
+        <div id="`+name+`" class="draggable">
             <div class="origin"></div>
-            <p  class="label"><small id="label+name+">r - px</small></p>
+            <p  class="label"><small id="label`+name+`">r - px</small></p>
         </div>
-    );
+    `);
     $('#' + name).draggable({
         cursor:'move',
         start: function(event, ui) {
@@ -44,3 +44,4 @@ function AddNode(name){
 function hasCollision(){
 
 }
+
