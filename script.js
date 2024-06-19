@@ -21,14 +21,29 @@ $(document).ready(function() {
     AddRandomNode('D');
    },1500);
    
-  
+    // run the collision checker every 33ms
+    setInterval(function(){
+        // if the distance between the two nodes is less than the sum of their radii, they are colliding
+        for(let i = 0; i < nodeCollection.length; i++){
+            for(let j = i + 1; j < nodeCollection.length; j++){
+                let node1 = nodeCollection[i];
+                let node2 = nodeCollection[j];
+                let distance = Math.sqrt(Math.pow(node1.x - node2.x, 2) + Math.pow(node1.y - node2.y, 2));
+                let sumOfRadii = node1.radius + node2.radius;
+                if(distance < sumOfRadii){
+                    console.log('Collision Detected');
+                }
+            }
+        }
+    }, 33);
+
 });
 
 function AddRandomNode(name){
     // randomize the position of the node
     let xPos = Math.floor(Math.random() * 500);
     let yPos = Math.floor(Math.random() * 500);
-    let radius = Math.floor(Math.random() * 10);
+    let radius = Math.floor(Math.random() * 100);
     AddNode(name, xPos, yPos, radius);
 }
 
@@ -53,6 +68,17 @@ function AddNode(name, x = 0, y = 0, radius = 0){
     //update the label
     $('#label' + name).text(x + ':' + y);
 
+    //update css of origin to be a dot and centered based on the radius
+    $('.origin').css('width', '5px');
+    $('.origin').css('height', '5px');
+    $('.origin').css('border-radius', '50%');
+    $('.origin').css('background-color', 'white');
+    $('.origin').css('position', 'absolute');
+    $('.origin').css('top', '50%');
+    $('.origin').css('left', '50%');
+    $('.origin').css('transform', 'translate(-50%, -50%)');
+
+
 
     $('#' + name).draggable({
         cursor:'move',
@@ -66,8 +92,17 @@ function AddNode(name, x = 0, y = 0, radius = 0){
             var offset = $(this).offset();
             var xPos = offset.left;
             var yPos = offset.top;
-            console.log('Dragged to: ', xPos, ':',yPos);
+            // console.log('Dragged to: ', xPos, ':',yPos);
             $('#label' + name).text(xPos.toFixed(2) + ':' + yPos.toFixed(2))
+
+            //update the x and y of the node
+            for(let i = 0; i < nodeCollection.length; i++){
+                if(nodeCollection[i].name == name){
+                    nodeCollection[i].x = xPos;
+                    nodeCollection[i].y = yPos;
+                    break;
+                }
+            }
         }
     });
     

@@ -14,19 +14,19 @@
 .label {
     position: absolute; color: white; white-space: nowrap
 }
-.origin {
+/* .origin {
     margin: auto;
     width: 10px;
     height: 10px;
     border-radius: 100%;
     background-color: white;
-}
+} */
 
 .pulse{
     animation: pulseAnimation 1s linear infinite;
 }
 
-@keyframes floatAnimation {
+/* @keyframes floatAnimation {
     0% {
         transform: translateY(0);
         
@@ -37,9 +37,9 @@
     100% {
         transform: translateY(0);
     }
-}
+} */
 
-@keyframes pulseAnimation {
+/* @keyframes pulseAnimation {
     0% {
         transform: scale(1);
     }
@@ -49,4 +49,4 @@
     100% {
         transform: scale(1);
     }
-}
+} */
