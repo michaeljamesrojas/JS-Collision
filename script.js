@@ -54,7 +54,7 @@ function AddNode(name, x = 0, y = 0, radius = 0){
     console.log('collection: ', nodeCollection);
     $("#space").append(`
         <div id="`+name+`" class="draggable">
-            <div class="origin"></div>
+            <div id="origin-`+name+`" class="origin"></div>
             <p  class="label"><small id="label`+name+`">r - px</small></p>
         </div>
     `);
@@ -89,7 +89,7 @@ function AddNode(name, x = 0, y = 0, radius = 0){
             console.log('Drag Stopped');
         },
         drag: function(event,ui){
-            var offset = $(this).offset();
+            var offset = $("#origin-" + name).offset();
             var xPos = offset.left;
             var yPos = offset.top;
             // console.log('Dragged to: ', xPos, ':',yPos);
