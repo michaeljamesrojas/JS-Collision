@@ -14,12 +14,12 @@ $(document).ready(function() {
    setTimeout(()=>{
     AddRandomNode('B');
    },500);
-   setTimeout(()=>{
-    AddRandomNode('C');
-   },1000);
-   setTimeout(()=>{
-    AddRandomNode('D');
-   },1500);
+//    setTimeout(()=>{
+//     AddRandomNode('C');
+//    },1000);
+//    setTimeout(()=>{
+//     AddRandomNode('D');
+//    },1500);
    
     // run the collision checker every 33ms
     setInterval(function(){
@@ -30,9 +30,20 @@ $(document).ready(function() {
                 let node2 = nodeCollection[j];
                 let distance = Math.sqrt(Math.pow(node1.x - node2.x, 2) + Math.pow(node1.y - node2.y, 2));
                 let sumOfRadii = node1.radius + node2.radius;
-                if(distance < sumOfRadii){
-                    console.log('Collision Detected');
+                console.log('distance: ', distance);
+                if(distance < 5){
+                    console.log('Collision Detected', nodeCollection[i].name);
+                    $("#" + nodeCollection[i].name).css('border', '2px dashed red');
+                    $("#" + nodeCollection[j].name).css('border', '2px dashed red');
+                } else{
+                    $("#" + nodeCollection[i].name).css('border', '2px dashed white');
+                    $("#" + nodeCollection[j].name).css('border', '2px dashed white');
                 }
+                
+                // if(distance < sumOfRadii){
+                //     console.log('distance: ', distance, 'Radi: ', sumOfRadii);
+                //     console.log('Collision Detected');
+                // }
             }
         }
     }, 33);
@@ -49,26 +60,29 @@ function AddRandomNode(name){
 
 function AddNode(name, x = 0, y = 0, radius = 0){
     // instantiate a new node
-    let node = new Node(name, x, y, radius);
-    nodeCollection.push(node);
     console.log('collection: ', nodeCollection);
     $("#space").append(`
         <div id="`+name+`" class="draggable">
-            <div id="origin-`+name+`" class="origin"></div>
+            <div id="origin-`+name+`" class="origin">
+            </div>
             <p  class="label"><small id="label`+name+`">r - px</small></p>
         </div>
     `);
-    // set the position of the node
-    $('#' + name).css('left', x + 'px');
-    $('#' + name).css('top', y + 'px');
-    $('#' + name).css('width', radius + 'px');
-    $('#' + name).css('height', radius + 'px');
-    $('#' + name).css('border-radius', radius + 'px');
-
     //update the label
-    $('#label' + name).text(x + ':' + y);
+    var offset = $("#origin-" + name).offset();
+    var xPos = offset.left;
+    var yPos = offset.top;
+    $('#label' + name).text(xPos.toFixed(2) + ':' + yPos.toFixed(2))
+    let node = new Node(name, xPos, yPos, radius);
+    nodeCollection.push(node);
+    // // set the position of the node
+    // $('#' + name).css('left', x + 'px');
+    // $('#' + name).css('top', y + 'px');
+    // $('#' + name).css('width', radius + 'px');
+    // $('#' + name).css('height', radius + 'px');
+    // $('#' + name).css('border-radius', radius + 'px');
 
-    //update css of origin to be a dot and centered based on the radius
+    // //update css of origin to be a dot and centered based on the radius
     $('.origin').css('width', '5px');
     $('.origin').css('height', '5px');
     $('.origin').css('border-radius', '50%');
@@ -78,8 +92,8 @@ function AddNode(name, x = 0, y = 0, radius = 0){
     $('.origin').css('left', '50%');
     $('.origin').css('transform', 'translate(-50%, -50%)');
 
-
-
+    
+    
     $('#' + name).draggable({
         cursor:'move',
         start: function(event, ui) {
@@ -89,9 +103,9 @@ function AddNode(name, x = 0, y = 0, radius = 0){
             console.log('Drag Stopped');
         },
         drag: function(event,ui){
-            var offset = $("#origin-" + name).offset();
-            var xPos = offset.left;
-            var yPos = offset.top;
+            offset = $("#origin-" + name).offset();
+            xPos = offset.left;
+            yPos = offset.top;
             // console.log('Dragged to: ', xPos, ':',yPos);
             $('#label' + name).text(xPos.toFixed(2) + ':' + yPos.toFixed(2))
 
