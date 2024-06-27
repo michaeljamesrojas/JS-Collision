@@ -35,15 +35,15 @@ $(document).ready(function() {
                     console.log('Collision Detected', nodeCollection[i].name);
                     $("#" + nodeCollection[i].name).css('border', '2px dashed red');
                     $("#" + nodeCollection[j].name).css('border', '2px dashed red');
+                } 
+                else if(distance < sumOfRadii){
+                    console.log('Collision Detected', nodeCollection[i].name);
+                    $("#" + nodeCollection[i].name).css('border', '2px dashed #FFD767');
+                    $("#" + nodeCollection[j].name).css('border', '2px dashed #FFD767');
                 } else{
                     $("#" + nodeCollection[i].name).css('border', '2px dashed white');
                     $("#" + nodeCollection[j].name).css('border', '2px dashed white');
                 }
-                
-                // if(distance < sumOfRadii){
-                //     console.log('distance: ', distance, 'Radi: ', sumOfRadii);
-                //     console.log('Collision Detected');
-                // }
             }
         }
     }, 33);
